@@ -1,15 +1,18 @@
+
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import { constants } from 'http2';
+import { HttpResponse } from './domain/response';
+import { userRoutes } from './routes/user.routes';
 
 export class App {
   private readonly app: Application;
   private readonly APPLICATION_RUNNING = 'Application is running on port';
   private readonly NOT_FOUND = 'Route does not exist';
+  private readonly STATUS_NOT_FOUND = constants.HTTP_STATUS_NOT_FOUND;
+  private readonly STATUS_OK = constants.HTTP_STATUS_OK;
 
-  constructor(private readonly port: (number | string) = process.env.SERVER_PORT || 3000) {
+  constructor(private readonly port: number) {
     this.app = express();
     this.middleware();
     this.routes();
@@ -21,9 +24,13 @@ export class App {
   }
 
   private routes(): void {
-    this.app.use('/users', (req: Request, res: Response) => { })
-    this.app.get('/', (req: Request, res: Response) => res.status(200).send({ message: 'Server is up' }))
-    this.app.all('*', (req: Request, res: Response) => res.status(404).send({ message: this.NOT_FOUND }))
+    this.app.use('/users', userRoutes)
+    this.app.get('/', (req: Request, res: Response) => {
+      res.status(this.STATUS_OK).send(new HttpResponse(this.STATUS_OK, 'Welcome to the shop'))
+    })
+    this.app.all('*', (req: Request, res: Response) => {
+      res.status(this.STATUS_NOT_FOUND).send(new HttpResponse(this.STATUS_NOT_FOUND, this.NOT_FOUND))
+    })
   }
 
   public listen() {
