@@ -24,7 +24,7 @@ export class App {
   }
 
   private routes(): void {
-    this.app.use('/users', userRoutes)
+    this.app.use('/user', userRoutes)
     this.app.get('/', (req: Request, res: Response) => {
       res.status(this.STATUS_OK).send(new HttpResponse(this.STATUS_OK, 'Welcome to the shop'))
     })

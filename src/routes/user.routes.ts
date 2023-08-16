@@ -1,5 +1,7 @@
-import express from 'express';
+import { Router } from 'express';
+import { UserController } from '../controllers/user.controller';
 
-const userRoutes = express.Router();
+export const userRoutes = Router();
+const userController = new UserController();
 
-export {userRoutes};
+userRoutes.get('/registration', userController.userRegistration)
