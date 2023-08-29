@@ -1,30 +1,24 @@
-import { knex } from "../models/user.model";
+import { UserInterface } from "../interfaces/user.interface";
+import { UserModel } from "../models/user.model";
+
+const model = new UserModel();
 
 export class UserService {
-  createUser(user_name: string, user_email: string, user_password: string) {
-    const dbData: any /* Object[]*/ = this.readUser(user_name);
-
-    if (dbData.length === 0) {
-
-      const data = {
-        user_name: user_name,
-        user_email: user_email,
-        user_password: user_password
-      }
-
-      knex('users').insert(data);
-    }
+  async createUser(user: UserInterface): Promise<string | void> {
+    const result = await model.createUser(user);
+    return result;
   }
 
-  readUser(user_name: string) {
-    return knex.select().where('user_name', '=', user_name)
+  async readUser(user_name: string): Promise<UserInterface[] | string> {
+    const user = await model.readUser(user_name);
+    return user;
   }
 
-  updateUser(user_name: string) {
-
+  async updateUser(user: UserInterface) {
+    await model.updateUser(user);
   }
 
-  deleteUser(user_name: string) {
-    knex.select().where('user_name', '=', user_name).del();
+  async deleteUser(user_name: string): Promise<void> {
+    await model.deleteUser(user_name);
   }
 }
