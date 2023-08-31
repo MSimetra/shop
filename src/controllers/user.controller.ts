@@ -5,13 +5,25 @@ import { HttpResponse } from "../domain/response";
 import { UserInterface } from "../interfaces/user.interface";
 
 
-const service = new UserService();
-
 export class UserController {
-  // public STATUS_OK = constants.HTTP_STATUS_OK;
+  private service: UserService;
+  
+  constructor() {
+    this.service = new UserService();
+  }
+
+  async getUser(req: Request, res: Response) {
+    console.log(this);
+    // const user = await this.service.readUser(req.body.user_name);
+    // res.status(constants.HTTP_STATUS_OK).send(user)
+  }
+  
+  // private service = new UserService();
+  private STATUS_OK = constants.HTTP_STATUS_OK;
+  
 
   async addUser(req: Request, res: Response) {
-    const result = await service.createUser(req.body.user);
+    const result = await this.service.createUser(req.body.user);
     if (!result) {
       res.status(constants.HTTP_STATUS_OK).send(new HttpResponse(constants.HTTP_STATUS_OK, 'user created'))
     } else {
@@ -19,18 +31,15 @@ export class UserController {
     }
   }
 
-  async getUser(req: Request, res: Response) {
-    const user = await service.readUser(req.body.user_name);
-    res.status(constants.HTTP_STATUS_OK).send(user)
-  }
+  
 
   async changeUser(req: Request, res: Response) {
-    await service.updateUser(req.body.user);
+    await this.service.updateUser(req.body.user);
     res.status(constants.HTTP_STATUS_OK).send(new HttpResponse(constants.HTTP_STATUS_OK, 'user changed'))
   }
 
   async removeUser(req: Request, res: Response) {
-    await service.deleteUser(req.body.user_name);
+    await this.service.deleteUser(req.body.user_name);
     res.status(constants.HTTP_STATUS_OK).send(new HttpResponse(constants.HTTP_STATUS_OK, 'user deleted'))
   }
 
