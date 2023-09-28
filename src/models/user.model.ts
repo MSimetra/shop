@@ -5,6 +5,9 @@ import { UserInterface } from "../interfaces/user.interface";
 export const knex = Knex(config);
 
 export class UserModel {
+
+  constructor() { }
+
   async createUser(user: UserInterface): Promise<string | void> {
     const result = await this.readUser(user.user_name);
     if (result !== 'user does not exists') {
@@ -29,4 +32,3 @@ export class UserModel {
     await knex.select().from('users').where('user_name', '=', user_name).del();
   }
 }
-

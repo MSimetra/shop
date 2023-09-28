@@ -4,6 +4,9 @@ import { UserModel } from "../models/user.model";
 const model = new UserModel();
 
 export class UserService {
+
+  constructor() { }
+
   async createUser(user: UserInterface): Promise<string | void> {
     const result = await model.createUser(user);
     return result;
