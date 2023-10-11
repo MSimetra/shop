@@ -4,7 +4,7 @@ import * as env from 'env-var';
 import fs from 'fs';
 import path from 'path';
 import jsonwebtoken from 'jsonwebtoken';
-import { dbUserInterface } from '../interfaces/db.user.interface';
+import { UserInterfaceDB } from '../interfaces/user.interface.db';
 
 dotenv.config();
 const SALT = env.get('SALT').required().asString();
@@ -29,7 +29,7 @@ export function genPassword(password: string) {
   return genHash;
 }
 
-export function issueJWT(user: dbUserInterface) {
+export function issueJWT(user: UserInterfaceDB) {
   const id = user.id;
   const expiresIn = '1d';
 

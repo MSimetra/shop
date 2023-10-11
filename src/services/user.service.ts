@@ -14,12 +14,12 @@ export class UserService {
     // return result;
   }
 
-  async readUser(username: string): Promise<UserInterfaceDB/* | string*/> {
+  async readUser(username: string): Promise<UserInterfaceDB> {
     const user = await model.readUser(username);
     return user;
   }
 
-  async readUserByID(username: string): Promise<UserInterfaceDB/* | string*/> {
+  async readUserByID(username: string): Promise<UserInterfaceDB> {
     const user = await model.readUserByID(username);
     return user;
   }

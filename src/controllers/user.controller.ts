@@ -21,12 +21,6 @@ export class UserController {
 
     await this.service.createUser(req.body.user);
     // const result = await this.service.createUser(req.body.user);
-
-    // if (!result) {
-    //   res.status(this.STATUS_OK).send(new HttpResponse(this.STATUS_OK, 'user created'))
-    // } else {
-    //   res.status(this.STATUS_OK).send(new HttpResponse(this.STATUS_OK, result))
-    // }
   }
 
   async getUser(req: Request, res: Response) {
@@ -38,7 +32,6 @@ export class UserController {
     const isValid = validPassword(req.body.password, user.password);
     if (isValid) {
       const tokenObject = issueJWT(user);
-      // res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires });
       res.status(200).send(`<p>You successfully logged in.</p>\
       <p>Use this token to get protected routes access:</p>\
       <p>${tokenObject.token}</p>\

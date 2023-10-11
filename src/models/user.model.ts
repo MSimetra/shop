@@ -12,29 +12,16 @@ export class UserModel {
   async createUser(user: UserInterface): Promise<string | void> {
     await knex('users').insert(user);
   }
-  // async createUser(user: UserInterface): Promise<string | void> {
-  //   const result = await this.readUser(user.username);
-  //   if (result !== 'user does not exists') {
-  //     return 'user already exists';
-  //   }
-  //   await knex('users').insert(user);
-  // }
 
-  async readUser(username: string): Promise<UserInterfaceDB/* | string*/> {
+  async readUser(username: string): Promise<UserInterfaceDB> {
     const user = await knex.select().from('users').where('username', '=', username)
     const result = user[0];
-    // if (result.length === 0) {
-    //   return 'user does not exists'
-    // };
     return result;
   }
-  
-  async readUserByID(id: string): Promise<UserInterfaceDB/* | string*/> {
+
+  async readUserByID(id: string): Promise<UserInterfaceDB> {
     const user = await knex.select().from('users').where('id', '=', id)
     const result = user[0];
-    // if (result.length === 0) {
-    //   return 'user does not exists'
-    // };
     return result;
   }
 

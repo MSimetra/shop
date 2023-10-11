@@ -1,12 +1,11 @@
-import { Router } from 'express';
 import passport from 'passport';
+import { Router } from 'express';
 import { genPassword } from '../utils/utils';
 import { UserController } from '../controllers/user.controller';
 
 export const routes = Router();
 const userController = new UserController();
 
-// routes.get('/', userController.getUser.bind(userController))
 routes.get('/', (req, res, next) => {
   res.send('<h1>Home</h1><p>Please <a href="/register">register</a> or <a href="/login">login</a></p>'
   );
@@ -55,8 +54,6 @@ routes.post('/login', (req, res, next) => {
 })
 
 routes.post('/login-success', passport.authenticate('jwt', { session: false }), (req, res, next) => {
-  console.log(req.body);
-  
   res.status(200).send('\
   <p><a href="/protected-route">Go to route for registered users</a></p>\
   <p><a href="/change-user">Change your profile</a></p>\
